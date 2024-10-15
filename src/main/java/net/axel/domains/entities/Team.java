@@ -9,12 +9,13 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "teams")
+
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
-@Table(name = "teams")
 public class Team implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

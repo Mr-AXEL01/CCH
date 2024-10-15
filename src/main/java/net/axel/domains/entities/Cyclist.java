@@ -10,12 +10,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "cyclists")
+
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
-@Table(name = "cyclists")
 public class Cyclist implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
