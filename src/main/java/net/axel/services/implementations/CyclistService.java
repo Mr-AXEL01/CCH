@@ -1,5 +1,6 @@
 package net.axel.services.implementations;
 
+import jakarta.transaction.Transactional;
 import net.axel.domains.entities.Cyclist;
 import net.axel.repositories.CyclistRepository;
 import net.axel.services.interfaces.ICyclistService;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class CyclistService implements ICyclistService {
 
     private final CyclistRepository cyclistRepository;
