@@ -36,4 +36,8 @@ public class Cyclist implements Serializable {
     @NotBlank(message = "nationality is required")
     @Column(name = "nationality", nullable = false)
     private String nationality;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id", nullable = false)
+    private Team team;
 }
