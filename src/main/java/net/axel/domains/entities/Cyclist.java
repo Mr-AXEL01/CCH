@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -41,4 +42,10 @@ public class Cyclist implements Serializable {
     @ManyToOne
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
+
+    @OneToMany(mappedBy = "cyclist")
+    Set<GeneralResult> generalResults;
+
+    @OneToMany(mappedBy = "cyclist")
+    Set<Result> results;
 }

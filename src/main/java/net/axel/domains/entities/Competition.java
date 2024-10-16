@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -39,4 +40,10 @@ public class Competition implements Serializable {
     @NotNull(message = "Distance is required")
     @Column(name = "distance", nullable = false)
     private double distance;
+
+    @OneToMany(mappedBy = "competition")
+    Set<Stage> stages;
+
+    @OneToMany(mappedBy = "competition")
+    Set<GeneralResult> generalResults;
 }
