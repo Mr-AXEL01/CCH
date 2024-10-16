@@ -3,6 +3,7 @@ package net.axel.domains.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.Accessors;
 import net.axel.domains.embeddeds.GeneralResultKey;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.time.Duration;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Accessors(chain = true)
 public class GeneralResult implements Serializable {
     @EmbeddedId
     private GeneralResultKey id;

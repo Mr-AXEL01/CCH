@@ -3,6 +3,7 @@ package net.axel.domains.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.Accessors;
 import net.axel.domains.embeddeds.ResultKey;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Accessors(chain = true)
 public class Result implements Serializable {
     @EmbeddedId
     private ResultKey id;
