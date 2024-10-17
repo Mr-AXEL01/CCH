@@ -2,6 +2,7 @@ package net.axel.services.implementations;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import net.axel.domains.dtos.TeamDto;
 import net.axel.domains.entities.Team;
 import net.axel.repositories.TeamRepository;
 import net.axel.services.interfaces.ITeamService;
@@ -29,17 +30,18 @@ public class TeamService implements ITeamService {
     }
 
     @Override
-    public Team saveTeam(Team team) {
+    public Team saveTeam(TeamDto dto) {
+        Team team = new Team(dto.teamName());
         return teamRepository.save(team);
     }
 
     @Override
-    public Team updateTeam(Team team) {
-        if (teamRepository.existsById(team.getId())) {
-            return teamRepository.save(team);
-        } else {
-            throw new IllegalArgumentException("Team not found with ID :" + team.getId());
-        }
+    public Team updateTeam(UUID id, TeamDto dto) {
+        if (!teamRepository.existsById(id))
+            throw new IllegalArgumentException("Team not found with ID :" + id);
+
+        Team team = new Team(id, dto.teamName());
+        return teamRepository.save(team);
     }
 
     @Override
