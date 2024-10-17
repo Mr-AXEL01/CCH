@@ -9,7 +9,6 @@ import net.axel.services.interfaces.ITeamService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,8 +24,8 @@ public class TeamService implements ITeamService {
 
     @Override
     public Team getTeamById(UUID id) {
-        Optional<Team> team = teamRepository.findById(id);
-        return team.orElse(null); //TODO: handle optional result
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Team not found with id: " + id));
     }
 
     @Override
@@ -37,10 +36,9 @@ public class TeamService implements ITeamService {
 
     @Override
     public Team updateTeam(UUID id, TeamDto dto) {
-        if (!teamRepository.existsById(id))
-            throw new IllegalArgumentException("Team not found with ID :" + id);
+        Team team = getTeamById(id);
 
-        Team team = new Team(id, dto.teamName());
+        team.setName(dto.teamName());
         return teamRepository.save(team);
     }
 
