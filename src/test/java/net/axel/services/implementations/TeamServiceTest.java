@@ -1,5 +1,6 @@
 package net.axel.services.implementations;
 
+import net.axel.domains.dtos.TeamDto;
 import net.axel.domains.entities.Team;
 import net.axel.repositories.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,12 +29,14 @@ class TeamServiceTest {
     private TeamService teamService;
 
     private Team team;
+    private TeamDto teamDto;
 
     @BeforeEach
     void setUP() {
         team = new Team()
                 .setId(UUID.randomUUID())
                 .setName("morocco");
+        teamDto = new TeamDto("usa");
     }
 
     @Test
@@ -49,11 +53,17 @@ class TeamServiceTest {
     }
 
     @Test
-    public void givenId_whenGetTeamById_thenReturnNull() {
-        when(teamRepository.findById(team.getId())).thenReturn(Optional.empty());
-        Team result = teamService.getTeamById(team.getId());
-        assertNull(result);
+    public void givenId_whenGetTeamById_thenReturnException() {
+        when(teamRepository.findById(team.getId())).thenThrow(new IllegalArgumentException("Team not found with id: " + team.getId()));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> teamService.getTeamById(team.getId()));
+        assertEquals("Team not found with id: " + team.getId(), exception.getMessage());
     }
 
-
+    @Test
+    public void givenTeam_whenSaveTeam_thenReturnTeam() {
+        Team savedTeam = new Team(teamDto.teamName());
+        when(teamRepository.save(any(Team.class))).thenReturn(savedTeam);
+        Team result = teamService.saveTeam(teamDto);
+        assertEquals("usa", result.getName());
+    }
 }
