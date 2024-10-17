@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,6 +33,12 @@ class TeamServiceTest {
         team = new Team()
                 .setId(UUID.randomUUID())
                 .setName("morocco");
+    }
+
+    @Test
+    public void givenNoTeam_whenGetAllTeams_thenReturnEmptyList() {
+        when(teamRepository.findAll()).thenReturn(Collections.emptyList());
+        assertTrue(teamService.getAllTeams().isEmpty());
     }
 
     @Test
