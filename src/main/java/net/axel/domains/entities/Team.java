@@ -30,6 +30,10 @@ public class Team implements Serializable {
     @OneToMany(mappedBy = "team")
     private Set<Cyclist> cyclists;
 
+    public Team(String name) {
+        this.name = name;
+    }
+
     public Team(UUID id, String name) {
         this.id = id;
         this.name = name;
