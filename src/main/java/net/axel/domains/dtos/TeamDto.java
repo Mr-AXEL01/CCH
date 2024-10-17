@@ -3,6 +3,7 @@ package net.axel.domains.dtos;
 import jakarta.validation.constraints.NotBlank;
 
 public record TeamDto(
-        @NotBlank String teamName
+        @NotBlank(message = "Team name is required")
+        String teamName
 ) {
 }
