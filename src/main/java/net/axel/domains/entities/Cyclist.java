@@ -50,4 +50,12 @@ public class Cyclist implements Serializable {
 
     @OneToMany(mappedBy = "cyclist")
     Set<Result> results;
+
+    public Cyclist(String firstName, String lastName, LocalDate birthdate, String nationality, Team team) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.nationality = nationality;
+        this.team = team;
+    }
 }
