@@ -25,7 +25,8 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public Competition getCompetitionById(UUID id) {
-        return null;
+        return competitionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("competition not found with id :" + id));
     }
 
     @Override
