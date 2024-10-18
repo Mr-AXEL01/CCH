@@ -37,7 +37,13 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public Competition updateCompetition(UUID id, CompetitionDto dto) {
-        return null;
+        Competition competition = getCompetitionById(id);
+
+        competition.setName(dto.competitionName())
+                .setPlace(dto.place())
+                .setDistance(dto.distance())
+                .setDate(dto.date());
+        return competitionRepository.save(competition);
     }
 
     @Override
