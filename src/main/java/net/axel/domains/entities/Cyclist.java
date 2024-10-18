@@ -34,8 +34,8 @@ public class Cyclist implements Serializable {
     private String lastName;
 
     @NotNull(message = "age is required")
-    @Column(name = "age", nullable = false)
-    private LocalDate age;
+    @Column(name = "birthdate", nullable = false)
+    private LocalDate birthdate;
 
     @NotBlank(message = "nationality is required")
     @Column(name = "nationality", nullable = false)
