@@ -48,6 +48,6 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public void deleteCompetition(UUID id) {
-
+        competitionRepository.deleteById(id);
     }
 }
