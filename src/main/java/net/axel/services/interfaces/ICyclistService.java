@@ -13,5 +13,7 @@ public interface ICyclistService {
 
     Cyclist saveCyclist(CyclistDto dto);
 
+    Cyclist updateCyclist(UUID id, CyclistDto dto);
+
     void deleteCyclist(UUID id);
 }
