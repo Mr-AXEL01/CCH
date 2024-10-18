@@ -46,4 +46,11 @@ public class Competition implements Serializable {
 
     @OneToMany(mappedBy = "competition")
     Set<GeneralResult> generalResults;
+
+    public Competition(String name, LocalDate date, String place, double distance) {
+        this.name = name;
+        this.date = date;
+        this.place = place;
+        this.distance = distance;
+    }
 }
