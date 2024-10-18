@@ -1,5 +1,6 @@
 package net.axel.services.interfaces;
 
+import net.axel.domains.dtos.CyclistDto;
 import net.axel.domains.entities.Cyclist;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface ICyclistService {
 
     Cyclist getCyclistById(UUID id);
 
-    Cyclist saveCyclist(Cyclist cyclist);
+    Cyclist saveCyclist(CyclistDto dto);
 
     void deleteCyclist(UUID id);
 }
