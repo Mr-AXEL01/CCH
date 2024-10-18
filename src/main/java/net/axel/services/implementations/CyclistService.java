@@ -21,21 +21,39 @@ public class CyclistService implements ICyclistService {
     private final CyclistRepository cyclistRepository;
     private final ITeamService teamService;
 
+    @Override
     public List<Cyclist> getAllCyclists() {
         return cyclistRepository.findAll();
     }
 
+    @Override
     public Cyclist getCyclistById(UUID id) {
         return cyclistRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cyclist not found with id :" + id));
     }
 
+    @Override
     public Cyclist saveCyclist(CyclistDto dto) {
         Team team = teamService.getTeamById(dto.teamId());
         Cyclist cyclist = new Cyclist(dto.firstName(), dto.lastName(), dto.birthdate(), dto.nationality(), team);
         return cyclistRepository.save(cyclist);
     }
 
+    @Override
+    public Cyclist updateCyclist(UUID id, CyclistDto dto) {
+        Team team = teamService.getTeamById(dto.teamId());
+
+        Cyclist cyclist = getCyclistById(id);
+        cyclist.setFirstName(dto.firstName())
+                .setLastName(dto.lastName())
+                .setBirthdate(dto.birthdate())
+                .setNationality(dto.nationality())
+                .setTeam(team);
+
+        return cyclistRepository.save(cyclist);
+    }
+
+    @Override
     public void deleteCyclist(UUID id) {
         cyclistRepository.deleteById(id);
     }
