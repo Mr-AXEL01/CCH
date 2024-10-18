@@ -31,7 +31,8 @@ public class CompetitionService implements ICompetitionService {
 
     @Override
     public Competition saveCompetition(CompetitionDto dto) {
-        return null;
+        Competition competition = new Competition(dto.competitionName(), dto.date(), dto.place(), dto.distance());
+        return competitionRepository.save(competition);
     }
 
     @Override
