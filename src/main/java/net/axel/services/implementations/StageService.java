@@ -40,7 +40,17 @@ public class StageService implements IStageService {
 
     @Override
     public Stage updateStage(UUID id, StageDto dto) {
-        return null;
+        Competition competition = competitionService.getCompetitionById(dto.competitionId());
+        Stage stage = getStageById(id);
+
+        stage.setNumber(dto.stageNumber())
+                .setStartLocation(dto.startLocation())
+                .setEndLocation(dto.endLocation())
+                .setStartDateTime(dto.startDateTime())
+                .setStageType(dto.stageType())
+                .setCompetition(competition);
+
+        return stageRepository.save(stage);
     }
 
     @Override
