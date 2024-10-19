@@ -55,6 +55,6 @@ public class StageService implements IStageService {
 
     @Override
     public void deleteStage(UUID id) {
-
+        stageRepository.deleteById(id);
     }
 }
