@@ -52,4 +52,13 @@ public class Stage implements Serializable {
 
     @OneToMany(mappedBy = "stage")
     Set<Result> results;
+
+    public Stage(int number, String startLocation, String endLocation, LocalDateTime startDateTime, StageType stageType, Competition competition) {
+        this.number = number;
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
+        StartDateTime = startDateTime;
+        this.stageType = stageType;
+        this.competition = competition;
+    }
 }
