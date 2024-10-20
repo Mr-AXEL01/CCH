@@ -37,4 +37,10 @@ public class GeneralResult implements Serializable {
 
     @Column(name = "general_rank")
     private int generalRank;
+
+    public GeneralResult(GeneralResultKey id, Cyclist cyclist, Competition competition) {
+        this.id = id;
+        this.cyclist = cyclist;
+        this.competition = competition;
+    }
 }
