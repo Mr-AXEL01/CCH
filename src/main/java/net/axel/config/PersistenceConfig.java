@@ -41,7 +41,7 @@ public class PersistenceConfig {
         factoryBean.setDataSource(dataSource());
         factoryBean.setPackagesToScan("net.axel");
 
-        // Additional properties
+        // -----------------Additional properties----------------------------------
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.hbm2ddl.auto", "create");
         jpaProperties.put("hibernate.show_sql", "true");
