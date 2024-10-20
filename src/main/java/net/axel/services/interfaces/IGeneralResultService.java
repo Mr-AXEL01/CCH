@@ -5,7 +5,6 @@ import net.axel.domains.embeddeds.GeneralResultKey;
 import net.axel.domains.entities.GeneralResult;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface IGeneralResultService {
     List<GeneralResult> getAllGeneralResults();
