@@ -32,11 +32,9 @@ public class GeneralResult implements Serializable {
     @JoinColumn(name = "competition_id")
     private Competition competition;
 
-    @NotNull(message = "general time is required.")
-    @Column(name = "general_time", nullable = false)
+    @Column(name = "general_time")
     private Duration generalTime;
 
-    @NotNull(message = "general rank is required")
-    @Column(name = "general_rank", nullable = false)
+    @Column(name = "general_rank")
     private int generalRank;
 }
