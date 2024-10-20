@@ -8,7 +8,6 @@ import net.axel.domains.embeddeds.ResultKey;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.UUID;
 
 @Entity
 @Table(name = "results")
