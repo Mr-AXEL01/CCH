@@ -4,7 +4,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.axel.domains.dtos.ResultDto;
 import net.axel.domains.embeddeds.ResultKey;
+import net.axel.domains.entities.Cyclist;
 import net.axel.domains.entities.Result;
+import net.axel.domains.entities.Stage;
 import net.axel.repositories.ResultRepository;
 import net.axel.services.interfaces.IResultService;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResultService implements IResultService {
     private final ResultRepository resultRepository;
+    private final CyclistService cyclistService;
+    private final StageService stageService;
 
     @Override
     public List<Result> getAllResults() {
@@ -32,17 +36,23 @@ public class ResultService implements IResultService {
     public Result saveResult(ResultDto dto) {
         ResultKey id = new ResultKey(dto.cyclistId(), dto.stageId());
 
+        Cyclist cyclist = cyclistService.getCyclistById(dto.cyclistId());
+        Stage stage = stageService.getStageById(dto.stageId());
 
-        return null;
+        Result result = new Result(id, cyclist, stage, dto.time());
+        return resultRepository.save(result);
     }
 
     @Override
     public Result updateResult(ResultKey id, ResultDto dto) {
-        return null;
+        Result result = getResultById(id);
+
+        result.setTime(dto.time());
+        return resultRepository.save(result);
     }
 
     @Override
     public void deleteResult(ResultKey id) {
-
+        resultRepository.deleteById(id);
     }
 }
