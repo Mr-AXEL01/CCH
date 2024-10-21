@@ -13,7 +13,5 @@ public interface IGeneralResultService {
 
     GeneralResult saveGeneralResult(GeneralResultDto dto);
 
-    GeneralResult updateGeneralResult(GeneralResultKey id, GeneralResultDto dto);
-
     void deleteGeneralResult(GeneralResultKey id);
 }

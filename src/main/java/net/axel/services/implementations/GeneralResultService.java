@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -47,21 +46,6 @@ public class GeneralResultService implements IGeneralResultService {
         GeneralResult generalResult = new GeneralResult(id, cyclist, competition, Duration.ZERO, 0);
         return generalResultRepository.save(generalResult);
     }
-
-//    @Override
-//    public GeneralResult updateGeneralResult(GeneralResultKey id, GeneralResultDto dto) {
-//        GeneralResult generalResult = getGeneralResultById(id);
-//
-//        GeneralResultKey newId = new GeneralResultKey(dto.cyclistId(), dto.competitionId());
-//        Competition competition = competitionService.getCompetitionById(dto.competitionId());
-//        Cyclist cyclist = cyclistService.getCyclistById(dto.cyclistId());
-//
-//        generalResult.setId(newId)
-//                .setCyclist(cyclist)
-//                .setCompetition(competition);
-//
-//        return generalResultRepository.save(generalResult);
-//    }
 
     @Override
     public void deleteGeneralResult(GeneralResultKey id) {
