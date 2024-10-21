@@ -39,4 +39,11 @@ public class Result implements Serializable {
     @NotNull(message = "rank is required")
     @Column(name = "rank", nullable = false)
     private int rank;
+
+    public Result(ResultKey id, Cyclist cyclist, Stage stage, Duration time) {
+        this.id = id;
+        this.cyclist = cyclist;
+        this.stage = stage;
+        this.time = time;
+    }
 }
