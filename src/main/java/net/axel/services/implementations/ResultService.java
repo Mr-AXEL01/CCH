@@ -8,7 +8,9 @@ import net.axel.domains.entities.Cyclist;
 import net.axel.domains.entities.Result;
 import net.axel.domains.entities.Stage;
 import net.axel.repositories.ResultRepository;
+import net.axel.services.interfaces.ICyclistService;
 import net.axel.services.interfaces.IResultService;
+import net.axel.services.interfaces.IStageService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResultService implements IResultService {
     private final ResultRepository resultRepository;
-    private final CyclistService cyclistService;
-    private final StageService stageService;
+    private final ICyclistService cyclistService;
+    private final IStageService stageService;
 
     @Override
     public List<Result> getAllResults() {

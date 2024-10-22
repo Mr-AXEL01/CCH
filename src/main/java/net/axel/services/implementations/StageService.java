@@ -6,6 +6,7 @@ import net.axel.domains.dtos.StageDto;
 import net.axel.domains.entities.Competition;
 import net.axel.domains.entities.Stage;
 import net.axel.repositories.StageRepository;
+import net.axel.services.interfaces.ICompetitionService;
 import net.axel.services.interfaces.IStageService;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class StageService implements IStageService {
 
     private final StageRepository stageRepository;
-    private final CompetitionService competitionService;
+    private final ICompetitionService competitionService;
 
     @Override
     public List<Stage> getAllStages() {
