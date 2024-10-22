@@ -27,6 +27,7 @@ public class PersistenceConfig {
         ds.setJdbcUrl("jdbc:postgresql://localhost:5432/cch");
         ds.setUsername("axel");
         ds.setPassword("6631");
+        ds.setDriverClassName("org.postgresql.Driver");
         return ds;
     }
 
