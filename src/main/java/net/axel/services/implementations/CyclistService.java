@@ -2,10 +2,11 @@ package net.axel.services.implementations;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import net.axel.domains.dtos.CyclistDto;
+import net.axel.domains.dtos.cyclists.CyclistDto;
 import net.axel.domains.entities.Cyclist;
 import net.axel.domains.entities.Team;
 import net.axel.repositories.CyclistRepository;
+import net.axel.repositories.TeamRepository;
 import net.axel.services.interfaces.ICyclistService;
 import net.axel.services.interfaces.ITeamService;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class CyclistService implements ICyclistService {
 
     private final CyclistRepository cyclistRepository;
+    private final TeamRepository teamRepository;
     private final ITeamService teamService;
 
     @Override
@@ -34,14 +36,17 @@ public class CyclistService implements ICyclistService {
 
     @Override
     public Cyclist saveCyclist(CyclistDto dto) {
-        Team team = teamService.getTeamById(dto.teamId());
+        Team team = teamRepository.findById(dto.teamId())
+                .orElseThrow(() -> new IllegalArgumentException("Team not found with id: " + dto.teamId()));
+
         Cyclist cyclist = new Cyclist(dto.firstName(), dto.lastName(), dto.birthdate(), dto.nationality(), team);
         return cyclistRepository.save(cyclist);
     }
 
     @Override
     public Cyclist updateCyclist(UUID id, CyclistDto dto) {
-        Team team = teamService.getTeamById(dto.teamId());
+        Team team = teamRepository.findById(dto.teamId())
+                .orElseThrow(() -> new IllegalArgumentException("Team not found with id: " + dto.teamId()));
 
         Cyclist cyclist = getCyclistById(id);
         cyclist.setFirstName(dto.firstName())
