@@ -2,24 +2,28 @@ package net.axel.domains.dtos.cyclists;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import net.axel.domains.dtos.teams.EmbeddedTeam;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record CyclistDto(
-        @NotBlank(message = "first name is required")
+public record CyclistResponseDTO(
+        @NotNull
+        UUID id,
+
+        @NotBlank
         String firstName,
 
-        @NotBlank(message = "last name is required")
+        @NotBlank
         String lastName,
 
-        @NotNull(message = "age is required")
+        @NotNull
         LocalDate birthdate,
 
-        @NotBlank(message = "nationality is required")
+        @NotBlank
         String nationality,
 
-        @NotNull(message = "team ID is required")
-        UUID teamId
+        @NotNull
+        EmbeddedTeam team
 ) {
 }

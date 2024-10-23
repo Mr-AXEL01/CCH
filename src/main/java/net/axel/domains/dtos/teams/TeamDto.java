@@ -1,4 +1,4 @@
-package net.axel.domains.dtos;
+package net.axel.domains.dtos.teams;
 
 import jakarta.validation.constraints.NotBlank;
 
