@@ -1,13 +1,12 @@
 package net.axel.controllers;
 
 import lombok.RequiredArgsConstructor;
+import net.axel.domains.dtos.teams.TeamDto;
 import net.axel.domains.dtos.teams.TeamResponseDTO;
 import net.axel.services.interfaces.ITeamService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,5 +28,11 @@ public class TeamController {
     public ResponseEntity<TeamResponseDTO> getTeamById(@PathVariable UUID id) {
         TeamResponseDTO team = teamService.getTeamById(id);
         return ResponseEntity.ok(team);
+    }
+
+    @PostMapping
+    public ResponseEntity<TeamResponseDTO> createTeam(@RequestBody TeamDto dto) {
+        TeamResponseDTO createdTeam = teamService.saveTeam(dto);
+        return new ResponseEntity<>(createdTeam, HttpStatus.CREATED);
     }
 }
