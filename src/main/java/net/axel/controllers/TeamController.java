@@ -35,4 +35,10 @@ public class TeamController {
         TeamResponseDTO createdTeam = teamService.saveTeam(dto);
         return new ResponseEntity<>(createdTeam, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamResponseDTO> updateTeam(@PathVariable UUID id, @RequestBody TeamDto dto) {
+        TeamResponseDTO updatedTeam = teamService.updateTeam(id, dto);
+        return ResponseEntity.ok(updatedTeam);
+    }
 }
