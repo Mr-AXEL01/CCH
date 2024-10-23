@@ -42,7 +42,7 @@ public class TeamController {
         return ResponseEntity.ok(updatedTeam);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTeam(@PathVariable UUID id) {
         teamService.deleteTeam(id);
         return ResponseEntity.noContent().build();
