@@ -9,6 +9,6 @@ public record TeamResponseDTO(
         @NotNull
         UUID id,
         @NotBlank(message = "Team name is required")
-        String teamName
+        String name
 ) {
 }
