@@ -25,4 +25,9 @@ public class TeamController {
         return ResponseEntity.ok(teams);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TeamResponseDTO> getTeamById(@PathVariable UUID id) {
+        TeamResponseDTO team = teamService.getTeamById(id);
+        return ResponseEntity.ok(team);
+    }
 }
