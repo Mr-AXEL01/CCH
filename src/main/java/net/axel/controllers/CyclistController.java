@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping(CyclistController.CONTROLLER_PATH)
 @RequiredArgsConstructor
 public class CyclistController {
-    public final static String CONTROLLER_PATH = "/api/v1/cyclist";
+    public final static String CONTROLLER_PATH = "/api/v1/cyclists";
     private final ICyclistService cyclistService;
 
     @GetMapping
