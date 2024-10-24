@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface ICyclistService {
     List<CyclistResponseDTO> getAllCyclists();
 
-    Cyclist getCyclistById(UUID id);
+    CyclistResponseDTO getCyclistById(UUID id);
 
     Cyclist saveCyclist(CyclistDto dto);
 

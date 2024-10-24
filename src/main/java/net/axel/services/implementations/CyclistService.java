@@ -35,8 +35,9 @@ public class CyclistService implements ICyclistService {
     }
 
     @Override
-    public Cyclist getCyclistById(UUID id) {
+    public CyclistResponseDTO getCyclistById(UUID id) {
         return cyclistRepository.findById(id)
+                .map(mapper::toResponseDto)
                 .orElseThrow(() -> new RuntimeException("Cyclist not found with id :" + id));
     }
 
