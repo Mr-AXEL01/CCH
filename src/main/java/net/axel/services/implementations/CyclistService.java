@@ -42,27 +42,34 @@ public class CyclistService implements ICyclistService {
     }
 
     @Override
-    public Cyclist saveCyclist(CyclistDto dto) {
+    public CyclistResponseDTO saveCyclist(CyclistDto dto) {
         Team team = teamRepository.findById(dto.teamId())
                 .orElseThrow(() -> new IllegalArgumentException("Team not found with id: " + dto.teamId()));
 
-        Cyclist cyclist = new Cyclist(dto.firstName(), dto.lastName(), dto.birthdate(), dto.nationality(), team);
-        return cyclistRepository.save(cyclist);
+        Cyclist cyclist = mapper.toEntity(dto)
+                .setTeam(team);
+
+        Cyclist savedCyclist = cyclistRepository.save(cyclist);
+
+        return mapper.toResponseDto(savedCyclist);
     }
 
     @Override
-    public Cyclist updateCyclist(UUID id, CyclistDto dto) {
+    public CyclistResponseDTO updateCyclist(UUID id, CyclistDto dto) {
         Team team = teamRepository.findById(dto.teamId())
                 .orElseThrow(() -> new IllegalArgumentException("Team not found with id: " + dto.teamId()));
 
-        Cyclist cyclist = getCyclistById(id);
-        cyclist.setFirstName(dto.firstName())
+        Cyclist cyclist = cyclistRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cyclist not found with id :" + id))
+                .setFirstName(dto.firstName())
                 .setLastName(dto.lastName())
                 .setBirthdate(dto.birthdate())
                 .setNationality(dto.nationality())
                 .setTeam(team);
 
-        return cyclistRepository.save(cyclist);
+        Cyclist updatedCyclist = cyclistRepository.save(cyclist);
+
+        return mapper.toResponseDto(updatedCyclist);
     }
 
     @Override

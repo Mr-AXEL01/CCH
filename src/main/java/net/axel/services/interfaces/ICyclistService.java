@@ -12,9 +12,9 @@ public interface ICyclistService {
 
     CyclistResponseDTO getCyclistById(UUID id);
 
-    Cyclist saveCyclist(CyclistDto dto);
+    CyclistResponseDTO saveCyclist(CyclistDto dto);
 
-    Cyclist updateCyclist(UUID id, CyclistDto dto);
+    CyclistResponseDTO updateCyclist(UUID id, CyclistDto dto);
 
     void deleteCyclist(UUID id);
 }
