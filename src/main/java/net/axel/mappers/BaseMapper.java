@@ -1,4 +1,4 @@
-package net.axel.mapper;
+package net.axel.mappers;
 
 public interface BaseMapper<E, R, D> {
 

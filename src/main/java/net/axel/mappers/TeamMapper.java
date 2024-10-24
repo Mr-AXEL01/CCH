@@ -1,4 +1,4 @@
-package net.axel.mapper;
+package net.axel.mappers;
 
 import net.axel.domains.dtos.teams.TeamDto;
 import net.axel.domains.dtos.teams.TeamResponseDTO;

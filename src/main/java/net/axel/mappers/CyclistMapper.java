@@ -1,4 +1,4 @@
-package net.axel.mapper;
+package net.axel.mappers;
 
 import net.axel.domains.dtos.cyclists.CyclistDto;
 import net.axel.domains.dtos.cyclists.CyclistResponseDTO;
