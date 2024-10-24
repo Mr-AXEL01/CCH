@@ -25,7 +25,7 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TeamResponseDTO> getTeamById(@PathVariable UUID id) {
+    public ResponseEntity<TeamResponseDTO> getTeamById(@PathVariable("id") UUID id) {
         TeamResponseDTO team = teamService.getTeamById(id);
         return ResponseEntity.ok(team);
     }
@@ -37,13 +37,13 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeamResponseDTO> updateTeam(@PathVariable UUID id, @RequestBody TeamDto dto) {
+    public ResponseEntity<TeamResponseDTO> updateTeam(@PathVariable("id") UUID id, @RequestBody TeamDto dto) {
         TeamResponseDTO updatedTeam = teamService.updateTeam(id, dto);
         return ResponseEntity.ok(updatedTeam);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTeam(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteTeam(@PathVariable("id") UUID id) {
         teamService.deleteTeam(id);
         return ResponseEntity.noContent().build();
     }
