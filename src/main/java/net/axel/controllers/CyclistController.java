@@ -35,4 +35,10 @@ public class CyclistController {
         CyclistResponseDTO createdCyclist = cyclistService.saveCyclist(dto);
         return new ResponseEntity<>(createdCyclist, HttpStatus.CREATED);
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<CyclistResponseDTO> updateCyclist(@PathVariable("id") UUID id, @RequestBody CyclistDto dto) {
+        CyclistResponseDTO updatedCyclist = cyclistService.updateCyclist(id, dto);
+        return ResponseEntity.ok(updatedCyclist);
+    }
 }
