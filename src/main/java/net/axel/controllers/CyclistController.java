@@ -1,13 +1,12 @@
 package net.axel.controllers;
 
 import lombok.RequiredArgsConstructor;
+import net.axel.domains.dtos.cyclists.CyclistDto;
 import net.axel.domains.dtos.cyclists.CyclistResponseDTO;
 import net.axel.services.interfaces.ICyclistService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,5 +28,11 @@ public class CyclistController {
     public ResponseEntity<CyclistResponseDTO> getCyclistById(@PathVariable("id") UUID id) {
         CyclistResponseDTO cyclist = cyclistService.getCyclistById(id);
         return ResponseEntity.ok(cyclist);
+    }
+    
+    @PostMapping
+    public ResponseEntity<CyclistResponseDTO> createCyclist(@RequestBody CyclistDto dto) {
+        CyclistResponseDTO createdCyclist = cyclistService.saveCyclist(dto);
+        return new ResponseEntity<>(createdCyclist, HttpStatus.CREATED);
     }
 }
