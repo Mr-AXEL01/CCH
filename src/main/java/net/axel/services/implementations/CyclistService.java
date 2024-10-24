@@ -3,8 +3,10 @@ package net.axel.services.implementations;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.axel.domains.dtos.cyclists.CyclistDto;
+import net.axel.domains.dtos.cyclists.CyclistResponseDTO;
 import net.axel.domains.entities.Cyclist;
 import net.axel.domains.entities.Team;
+import net.axel.mappers.CyclistMapper;
 import net.axel.repositories.CyclistRepository;
 import net.axel.repositories.TeamRepository;
 import net.axel.services.interfaces.ICyclistService;
@@ -21,11 +23,15 @@ public class CyclistService implements ICyclistService {
 
     private final CyclistRepository cyclistRepository;
     private final TeamRepository teamRepository;
+    private final CyclistMapper mapper;
     private final ITeamService teamService;
 
     @Override
-    public List<Cyclist> getAllCyclists() {
-        return cyclistRepository.findAll();
+    public List<CyclistResponseDTO> getAllCyclists() {
+        return cyclistRepository.findAll()
+                .stream()
+                .map(mapper::toResponseDto)
+                .toList();
     }
 
     @Override
