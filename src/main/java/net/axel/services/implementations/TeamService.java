@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import net.axel.domains.dtos.teams.TeamDto;
 import net.axel.domains.dtos.teams.TeamResponseDTO;
 import net.axel.domains.entities.Team;
-import net.axel.mapper.TeamMapper;
+import net.axel.mappers.TeamMapper;
 import net.axel.repositories.TeamRepository;
 import net.axel.services.interfaces.ITeamService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package net.axel.services.interfaces;
 
-import net.axel.domains.dtos.CompetitionDto;
+import net.axel.domains.dtos.competitions.CompetitionDto;
 import net.axel.domains.entities.Competition;
 
 import java.util.List;
