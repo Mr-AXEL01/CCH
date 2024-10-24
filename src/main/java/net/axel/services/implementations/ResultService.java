@@ -7,6 +7,7 @@ import net.axel.domains.embeddeds.ResultKey;
 import net.axel.domains.entities.Cyclist;
 import net.axel.domains.entities.Result;
 import net.axel.domains.entities.Stage;
+import net.axel.repositories.CyclistRepository;
 import net.axel.repositories.ResultRepository;
 import net.axel.services.interfaces.ICyclistService;
 import net.axel.services.interfaces.IResultService;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ResultService implements IResultService {
     private final ResultRepository resultRepository;
     private final ICyclistService cyclistService;
+    private final CyclistRepository cyclistRepository;
     private final IStageService stageService;
 
     @Override
@@ -38,7 +40,9 @@ public class ResultService implements IResultService {
     public Result saveResult(ResultDto dto) {
         ResultKey id = new ResultKey(dto.cyclistId(), dto.stageId());
 
-        Cyclist cyclist = cyclistService.getCyclistById(dto.cyclistId());
+        Cyclist cyclist = cyclistRepository.findById(dto.cyclistId())
+                .orElseThrow(() -> new RuntimeException("Cyclist not found with id :" + dto.cyclistId()));
+
         Stage stage = stageService.getStageById(dto.stageId());
 
         Result result = new Result(id, cyclist, stage, dto.time());

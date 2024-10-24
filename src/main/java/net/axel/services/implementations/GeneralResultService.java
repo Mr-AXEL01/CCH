@@ -7,6 +7,7 @@ import net.axel.domains.embeddeds.GeneralResultKey;
 import net.axel.domains.entities.Competition;
 import net.axel.domains.entities.Cyclist;
 import net.axel.domains.entities.GeneralResult;
+import net.axel.repositories.CyclistRepository;
 import net.axel.repositories.GeneralResultRepository;
 import net.axel.services.interfaces.ICompetitionService;
 import net.axel.services.interfaces.ICyclistService;
@@ -23,6 +24,7 @@ public class GeneralResultService implements IGeneralResultService {
 
     private final GeneralResultRepository generalResultRepository;
     private final ICyclistService cyclistService;
+    private final CyclistRepository cyclistRepository;
     private final ICompetitionService competitionService;
 
     @Override
@@ -41,7 +43,8 @@ public class GeneralResultService implements IGeneralResultService {
         GeneralResultKey id = new GeneralResultKey(dto.cyclistId(), dto.competitionId());
 
         Competition competition = competitionService.getCompetitionById(dto.competitionId());
-        Cyclist cyclist = cyclistService.getCyclistById(dto.cyclistId());
+        Cyclist cyclist = cyclistRepository.findById(dto.cyclistId())
+                .orElseThrow(() -> new RuntimeException("Cyclist not found with id :" + dto.cyclistId()));
 
         GeneralResult generalResult = new GeneralResult(id, cyclist, competition, Duration.ZERO, 0);
         return generalResultRepository.save(generalResult);
