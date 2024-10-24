@@ -41,4 +41,10 @@ public class CyclistController {
         CyclistResponseDTO updatedCyclist = cyclistService.updateCyclist(id, dto);
         return ResponseEntity.ok(updatedCyclist);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCyclist(@PathVariable("id") UUID id) {
+        cyclistService.deleteCyclist(id);
+        return ResponseEntity.noContent().build();
+    }
 }
