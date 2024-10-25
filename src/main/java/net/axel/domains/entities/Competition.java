@@ -42,10 +42,10 @@ public class Competition implements Serializable {
     private double distance;
 
     @OneToMany(mappedBy = "competition")
-    Set<Stage> stages;
+    private Set<Stage> stages;
 
     @OneToMany(mappedBy = "competition")
-    Set<GeneralResult> generalResults;
+    private Set<GeneralResult> generalResults;
 
     public Competition(String name, LocalDate date, String place, double distance) {
         this.name = name;

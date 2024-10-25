@@ -46,10 +46,10 @@ public class Cyclist implements Serializable {
     private Team team;
 
     @OneToMany(mappedBy = "cyclist")
-    Set<GeneralResult> generalResults;
+    private Set<GeneralResult> generalResults;
 
     @OneToMany(mappedBy = "cyclist")
-    Set<Result> results;
+    private Set<Result> results;
 
     public Cyclist(String firstName, String lastName, LocalDate birthdate, String nationality, Team team) {
         this.firstName = firstName;

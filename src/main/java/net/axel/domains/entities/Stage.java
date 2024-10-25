@@ -51,7 +51,7 @@ public class Stage implements Serializable {
     private Competition competition;
 
     @OneToMany(mappedBy = "stage")
-    Set<Result> results;
+    private Set<Result> results;
 
     public Stage(int number, String startLocation, String endLocation, LocalDateTime startDateTime, StageType stageType, Competition competition) {
         this.number = number;
