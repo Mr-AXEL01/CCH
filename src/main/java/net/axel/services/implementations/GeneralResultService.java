@@ -28,6 +28,21 @@ public class GeneralResultService extends BaseService<GeneralResult, GeneralResu
     }
 
     @Override
+    public GeneralResultResponseDTO create(GeneralResultDto dto) {
+        GeneralResultKey id = new GeneralResultKey(dto.cyclistId(), dto.competitionId());
+
+        Cyclist cyclist = cyclistRepository.findById(dto.cyclistId())
+                .orElseThrow(() -> new RuntimeException("Cyclist not found with ID :" + dto.cyclistId()));
+
+        Competition competition = competitionRepository.findById(dto.competitionId())
+                .orElseThrow(() -> new RuntimeException("Competition not found with ID :" + dto.competitionId()));
+
+        GeneralResult savedGeneralResult = repository.save(new GeneralResult(id, cyclist, competition));
+
+        return mapper.toResponseDto(savedGeneralResult);
+    }
+
+    @Override
     protected void updateEntity(GeneralResult entity, GeneralResultDto dto) {
         Competition competition = competitionRepository.findById(dto.competitionId())
                 .orElseThrow(() -> new RuntimeException("competition not found with id: " + dto.competitionId()));
