@@ -44,7 +44,7 @@ public class ResultService extends BaseService<Result, ResultDto, ResultResponse
         Stage stage = stageRepository.findById(dto.stageId())
                 .orElseThrow(() -> new RuntimeException("Stage not found with id: " + dto.stageId()));
 
-        Result savedResult = new Result(id, cyclist, stage, dto.time());
+        Result savedResult = repository.save(new Result(id, cyclist, stage, dto.time()));
         return mapper.toResponseDto(savedResult);
     }
 
