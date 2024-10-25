@@ -1,4 +1,4 @@
-package net.axel.domains.dtos;
+package net.axel.domains.dtos.generalResults;
 
 import jakarta.validation.constraints.NotNull;
 

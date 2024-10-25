@@ -1,4 +1,4 @@
-package net.axel.domains.dtos;
+package net.axel.domains.dtos.stages;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

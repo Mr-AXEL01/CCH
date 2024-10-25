@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public record CompetitionDto(
         @NotBlank(message = "competition name is required")
-        String competitionName,
+        String name,
 
         @NotBlank(message = "competition place is necessary")
         String place,
