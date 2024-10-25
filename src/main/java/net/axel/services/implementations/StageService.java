@@ -1,61 +1,48 @@
 package net.axel.services.implementations;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import net.axel.domains.dtos.StageDto;
+import net.axel.domains.dtos.stages.StageDto;
+import net.axel.domains.dtos.stages.StageResponseDTO;
 import net.axel.domains.entities.Competition;
 import net.axel.domains.entities.Stage;
+import net.axel.mappers.StageMapper;
+import net.axel.repositories.CompetitionRepository;
 import net.axel.repositories.StageRepository;
-import net.axel.services.interfaces.ICompetitionService;
 import net.axel.services.interfaces.IStageService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
-public class StageService implements IStageService {
+public class StageService extends BaseService<Stage, StageDto, StageResponseDTO, UUID> implements IStageService {
 
-    private final StageRepository stageRepository;
-    private final ICompetitionService competitionService;
+    private final CompetitionRepository competitionRepository;
 
-    @Override
-    public List<Stage> getAllStages() {
-        return stageRepository.findAll();
+    public StageService(StageRepository stageRepository, StageMapper mapper, CompetitionRepository competitionRepository) {
+        super(stageRepository, mapper);
+        this.competitionRepository = competitionRepository;
     }
 
     @Override
-    public Stage getStageById(UUID id) {
-        return stageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Error finding stage with id :" +id));
+    public StageResponseDTO create(StageDto dto) {
+        Competition competition = competitionRepository.findById(dto.competitionId())
+                .orElseThrow(() -> new RuntimeException("Competition not found with ID :" + dto.competitionId()));
+
+        Stage savedStage = new Stage(dto.stageNumber(), dto.startLocation(), dto.endLocation(), dto.startDateTime(), dto.stageType(), competition);
+        return mapper.toResponseDto(repository.save(savedStage));
     }
 
     @Override
-    public Stage saveStage(StageDto dto) {
-        Competition competition = competitionService.getCompetitionById(dto.competitionId());
-        Stage stage = new Stage(dto.stageNumber(), dto.startLocation(), dto.endLocation(), dto.startDateTime(), dto.stageType(), competition);
-        return stageRepository.save(stage);
-    }
+    protected void updateEntity(Stage entity, StageDto dto) {
+        Competition competition = competitionRepository.findById(dto.competitionId())
+                .orElseThrow(() -> new RuntimeException("Competition not found with ID :" + dto.competitionId()));
 
-    @Override
-    public Stage updateStage(UUID id, StageDto dto) {
-        Stage stage = getStageById(id);
-        Competition competition = competitionService.getCompetitionById(dto.competitionId());
-
-        stage.setNumber(dto.stageNumber())
+        entity.setNumber(dto.stageNumber())
                 .setStartLocation(dto.startLocation())
                 .setEndLocation(dto.endLocation())
                 .setStartDateTime(dto.startDateTime())
                 .setStageType(dto.stageType())
                 .setCompetition(competition);
-
-        return stageRepository.save(stage);
-    }
-
-    @Override
-    public void deleteStage(UUID id) {
-        stageRepository.deleteById(id);
     }
 }

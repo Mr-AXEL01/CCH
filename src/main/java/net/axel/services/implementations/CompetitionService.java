@@ -1,53 +1,29 @@
 package net.axel.services.implementations;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import net.axel.domains.dtos.CompetitionDto;
+import net.axel.domains.dtos.competitions.CompetitionDto;
+import net.axel.domains.dtos.competitions.CompetitionResponseDTO;
 import net.axel.domains.entities.Competition;
+import net.axel.mappers.CompetitionMapper;
 import net.axel.repositories.CompetitionRepository;
 import net.axel.services.interfaces.ICompetitionService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
-public class CompetitionService implements ICompetitionService {
+public class CompetitionService extends BaseService<Competition, CompetitionDto, CompetitionResponseDTO, UUID> implements ICompetitionService {
 
-    private final CompetitionRepository competitionRepository;
-
-    @Override
-    public List<Competition> getAllCompetitions() {
-        return competitionRepository.findAll();
+    public CompetitionService(CompetitionRepository competitionRepository, CompetitionMapper mapper) {
+        super(competitionRepository, mapper);
     }
 
     @Override
-    public Competition getCompetitionById(UUID id) {
-        return competitionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("competition not found with id :" + id));
-    }
-
-    @Override
-    public Competition saveCompetition(CompetitionDto dto) {
-        Competition competition = new Competition(dto.competitionName(), dto.date(), dto.place(), dto.distance());
-        return competitionRepository.save(competition);
-    }
-
-    @Override
-    public Competition updateCompetition(UUID id, CompetitionDto dto) {
-        Competition competition = getCompetitionById(id);
-
-        competition.setName(dto.competitionName())
-                .setPlace(dto.place())
+    protected void updateEntity(Competition entity, CompetitionDto dto) {
+        entity.setDate(dto.date())
                 .setDistance(dto.distance())
-                .setDate(dto.date());
-        return competitionRepository.save(competition);
-    }
-
-    @Override
-    public void deleteCompetition(UUID id) {
-        competitionRepository.deleteById(id);
+                .setName(dto.name())
+                .setPlace(dto.place());
     }
 }
