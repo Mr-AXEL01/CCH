@@ -6,5 +6,5 @@ import net.axel.domains.entities.Cyclist;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface CyclistMapper extends BaseMapper<Cyclist, CyclistResponseDTO, CyclistDto>{
+public interface CyclistMapper extends BaseMapper<Cyclist, CyclistResponseDTO, CyclistDto> {
 }
