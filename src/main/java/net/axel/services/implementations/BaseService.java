@@ -1,0 +1,55 @@
+package net.axel.services.implementations;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import net.axel.mappers.BaseMapper;
+import net.axel.services.interfaces.IBaseService;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+@Transactional
+@RequiredArgsConstructor
+public abstract class BaseService<E, D, R, K> implements IBaseService<E, D, R, K> {
+
+    protected final JpaRepository<E, K> repository;
+    protected final BaseMapper<E, R, D> mapper;
+
+    @Override
+    public List<R> getAll() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toResponseDto)
+                .toList();
+    }
+
+    @Override
+    public R getById(K id) {
+        return repository.findById(id)
+                .map(mapper::toResponseDto)
+                .orElseThrow(() -> new RuntimeException("Entity not found with id: " + id));
+    }
+
+    @Override
+    public R create(D dto) {
+        E entity = mapper.toEntity(dto);
+        E savedEntity = repository.save(entity);
+        return mapper.toResponseDto(savedEntity);
+    }
+
+    @Override
+    public R update(K id, D dto) {
+        E entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Entity not found with id: " + id));
+        updateEntity(entity, dto);
+        E updatedEntity = repository.save(entity);
+        return mapper.toResponseDto(updatedEntity);
+    }
+
+    @Override
+    public void delete(K id) {
+        repository.deleteById(id);
+    }
+
+    protected abstract void updateEntity(E entity, D dto);
+}
