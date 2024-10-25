@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public record StageDto(
         @NotNull(message = "number of the stage os required.")
-        int stageNumber,
+        int number,
 
         @NotBlank(message = "the Start location for the stage is required.")
         String startLocation,
