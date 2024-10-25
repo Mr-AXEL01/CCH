@@ -36,7 +36,6 @@ public class Result implements Serializable {
     @Column(name = "time", nullable = false)
     private Duration time;
 
-    @NotNull(message = "rank is required")
     @Column(name = "rank", nullable = false)
     private int rank;
 
