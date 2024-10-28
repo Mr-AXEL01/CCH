@@ -46,6 +46,9 @@ public class Stage implements Serializable {
     @Column(name = "stage_type", nullable = false)
     private StageType stageType;
 
+    @Column(name = "closed")
+    private boolean closed;
+
     @ManyToOne
     @JoinColumn(name = "competition_id")
     private Competition competition;
@@ -53,12 +56,13 @@ public class Stage implements Serializable {
     @OneToMany(mappedBy = "stage")
     private Set<Result> results;
 
-    public Stage(int number, String startLocation, String endLocation, LocalDateTime startDateTime, StageType stageType, Competition competition) {
+    public Stage(int number, String startLocation, String endLocation, LocalDateTime startDateTime, StageType stageType, boolean closed, Competition competition) {
         this.number = number;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         StartDateTime = startDateTime;
         this.stageType = stageType;
+        this.closed = closed;
         this.competition = competition;
     }
 }

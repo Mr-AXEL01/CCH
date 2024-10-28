@@ -23,6 +23,8 @@ public record StageDto(
         @NotNull(message = "stage type is required")
         StageType stageType,
 
+        boolean closed,
+
         @NotNull(message = "the competition id for the stage is required.")
         UUID competitionId
 ) {
