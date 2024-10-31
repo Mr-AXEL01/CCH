@@ -29,7 +29,7 @@ public class StageService extends BaseService<Stage, StageDto, StageResponseDTO,
         Competition competition = competitionRepository.findById(dto.competitionId())
                 .orElseThrow(() -> new RuntimeException("Competition not found with ID :" + dto.competitionId()));
 
-        Stage savedStage = new Stage(dto.number(), dto.startLocation(), dto.endLocation(), dto.startDateTime(), dto.stageType(), competition);
+        Stage savedStage = new Stage(dto.number(), dto.startLocation(), dto.endLocation(), dto.startDateTime(), dto.stageType(), dto.closed(), competition);
         return mapper.toResponseDto(repository.save(savedStage));
     }
 
@@ -43,6 +43,7 @@ public class StageService extends BaseService<Stage, StageDto, StageResponseDTO,
                 .setEndLocation(dto.endLocation())
                 .setStartDateTime(dto.startDateTime())
                 .setStageType(dto.stageType())
+                .setClosed(dto.closed())
                 .setCompetition(competition);
     }
 }
