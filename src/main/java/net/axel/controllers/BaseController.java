@@ -21,7 +21,7 @@ public abstract class BaseController<E, D, R, K> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<R> getById(@PathVariable("id") K id) {
+    public ResponseEntity<R> getById(@PathVariable ("id") K id) {
         R entity = baseService.getById(id);
         return ResponseEntity.ok(entity);
     }
