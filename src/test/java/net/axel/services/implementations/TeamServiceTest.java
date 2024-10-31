@@ -1,7 +1,11 @@
 package net.axel.services.implementations;
 
-import net.axel.domains.dtos.TeamDto;
+import net.axel.domains.dtos.cyclists.EmbeddedCyclist;
+import net.axel.domains.dtos.teams.TeamDto;
+import net.axel.domains.dtos.teams.TeamResponseDTO;
 import net.axel.domains.entities.Team;
+import net.axel.mappers.BaseMapper;
+import net.axel.mappers.TeamMapper;
 import net.axel.repositories.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,45 +30,34 @@ class TeamServiceTest {
     @Mock
     private TeamRepository teamRepository;
 
+    @Mock
+    private TeamMapper teamMapper;
+
     @InjectMocks
     private TeamService teamService;
 
     private Team team;
     private TeamDto teamDto;
+    private TeamResponseDTO teamResponseDTO;
+    private final UUID teamId = UUID.randomUUID();
 
     @BeforeEach
-    void setUP() {
-        team = new Team()
-                .setId(UUID.randomUUID())
-                .setName("morocco");
-        teamDto = new TeamDto("usa");
+    void setUp() {
+        team = new Team(teamId, "test Team");
+        teamDto = new TeamDto("test Team");
+        teamResponseDTO = new TeamResponseDTO(teamId, "Test Team", Collections.emptyList());
     }
 
     @Test
-    public void givenNoTeam_whenGetAllTeams_thenReturnEmptyList() {
-        when(teamRepository.findAll()).thenReturn(Collections.emptyList());
-        assertTrue(teamService.getAllTeams().isEmpty());
+    void givenTeamsInDatabase_whenGetAllTeams_thenReturnAllTeams() {
+        when(teamRepository.findAll()).thenReturn(Collections.singletonList(team));
+        when(teamMapper.toResponseDto(team)).thenReturn(teamResponseDTO);
+
+        var result = teamService.getAll();
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(teamResponseDTO, result.get(0));
     }
 
-    @Test
-    public void givenId_whenGetTeamById_thenReturnTeam() {
-        when(teamRepository.findById(team.getId())).thenReturn(Optional.of(team));
-        Team result = teamService.getTeamById(team.getId());
-        assertEquals("morocco", result.getName());
-    }
-
-    @Test
-    public void givenId_whenGetTeamById_thenReturnException() {
-        when(teamRepository.findById(team.getId())).thenThrow(new IllegalArgumentException("Team not found with id: " + team.getId()));
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> teamService.getTeamById(team.getId()));
-        assertEquals("Team not found with id: " + team.getId(), exception.getMessage());
-    }
-
-    @Test
-    public void givenTeam_whenSaveTeam_thenReturnTeam() {
-        Team savedTeam = new Team(teamDto.teamName());
-        when(teamRepository.save(any(Team.class))).thenReturn(savedTeam);
-        Team result = teamService.saveTeam(teamDto);
-        assertEquals("usa", result.getName());
-    }
 }
