@@ -1,5 +1,6 @@
 package net.axel.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import net.axel.services.interfaces.IBaseService;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public abstract class BaseController<E, D, R, K> {
 
-    private final IBaseService<E, D, R, K> baseService;
+    protected final IBaseService<E, D, R, K> baseService;
 
     @GetMapping
     public ResponseEntity<List<R>> getAll() {
@@ -26,13 +27,13 @@ public abstract class BaseController<E, D, R, K> {
     }
 
     @PostMapping
-    public ResponseEntity<R> create(@RequestBody D dto) {
+    public ResponseEntity<R> create(@RequestBody @Valid D dto) {
         R createdEntity = baseService.create(dto);
         return new ResponseEntity<>(createdEntity, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<R> update(@PathVariable("id") K id, @RequestBody D dto) {
+    public ResponseEntity<R> update(@PathVariable("id") @Valid K id, @RequestBody D dto) {
         R updatedEntity = baseService.update(id, dto);
         return ResponseEntity.ok(updatedEntity);
     }
